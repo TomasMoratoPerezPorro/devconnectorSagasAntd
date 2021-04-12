@@ -1,14 +1,28 @@
-import { Button } from 'antd';
-import React from 'react';
+import React from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { Layout } from 'antd'
 
-import './styles.less';
+const { Header, Content } = Layout
+
+import './styles.less'
+import CustomHeader from '../components/CustomHeader'
+import Landing from './Landing'
 
 function App() {
   return (
-    <div className='App'>
-      <Button type='primary'>Button</Button>
+    <div className="App">
+      <Router>
+        <Layout>
+          <Header>
+            <CustomHeader></CustomHeader>
+          </Header>
+          <Content>
+            <Route exact path="/" component={Landing} />
+          </Content>
+        </Layout>
+      </Router>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
