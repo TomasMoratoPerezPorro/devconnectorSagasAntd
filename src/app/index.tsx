@@ -7,6 +7,9 @@ const { Header, Content } = Layout
 import './styles.less'
 import CustomHeader from '../components/CustomHeader'
 import Landing from './Landing'
+import Register from './Register'
+import Login from './Login'
+import Alert from '../components/Alert'
 
 function App() {
   return (
@@ -17,7 +20,10 @@ function App() {
             <CustomHeader></CustomHeader>
           </Header>
           <Content>
+            <Alert />
             <Route exact path="/" component={Landing} />
+            <Route exact path="/register" component={Register} />
+            <Route exact path="/login" component={Login} />
           </Content>
         </Layout>
       </Router>

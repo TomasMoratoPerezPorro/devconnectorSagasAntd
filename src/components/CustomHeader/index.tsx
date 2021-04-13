@@ -12,8 +12,14 @@ export default function CustomHeader() {
           </Link>
         </Menu.Item>
         <Menu.Item key="1">Developers</Menu.Item>
-        <Menu.Item key="2">Register</Menu.Item>
-        <Menu.Item key="3">Login</Menu.Item>
+
+        <Menu.Item key="2">
+          <Link to="/register">Register</Link>
+        </Menu.Item>
+
+        <Menu.Item key="3">
+          <Link to="/login">Login</Link>
+        </Menu.Item>
       </Menu>
     </div>
   )
