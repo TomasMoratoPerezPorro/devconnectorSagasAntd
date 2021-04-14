@@ -2,7 +2,7 @@ import { createAction } from '@reduxjs/toolkit'
 
 export interface IAlertObject {
   msg: string
-  alertType: number
+  alertType: string
   timeOut: number
   id: string
 }

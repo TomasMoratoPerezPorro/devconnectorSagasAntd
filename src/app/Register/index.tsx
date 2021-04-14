@@ -1,5 +1,8 @@
 import React from 'react'
 import './styles.less'
+import rootActions from '../../store/rootActions'
+import { IAlertObject } from '../../store/alert/actions'
+import { useDispatch } from 'react-redux'
 import { Form, Input, Button } from 'antd'
 
 const formItemLayout = {
@@ -36,12 +39,21 @@ const tailFormItemLayout = {
 }
 
 const Register = () => {
+  const d = useDispatch()
+
   const onFinish = (values: any) => {
     console.log('Success:', values)
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('Failed:', errorInfo)
+    const alert: IAlertObject = {
+      msg: 'Big Problem bro',
+      alertType: 'danger',
+      timeOut: 3000,
+      id: '001'
+    }
+    d(rootActions.alertActions.setAlert(alert))
   }
 
   return (
