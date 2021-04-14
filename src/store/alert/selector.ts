@@ -1,12 +1,12 @@
 import { createSelector } from 'reselect'
 import { IAlertsState } from './reducer'
 
-const getReducer = ({ alerts }: { alerts: IAlertsState }) => alerts
+const getReducer = ({ alert }: { alert: IAlertsState }) => alert
 
-const users = createSelector(getReducer, state => state.alerts)
+const alerts = createSelector(getReducer, state => state.alerts)
 
 const alertSelectors = {
-  users
+  alerts
 }
 
 export default alertSelectors

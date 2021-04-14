@@ -18,10 +18,6 @@ export default createReducer(initState, builder => {
     }))
     .addCase(rootActions.alertActions.deleteAlert, (state, action) => ({
       ...state,
-      alerts: removeAlertfromArray(state.alerts, action.payload)
+      alerts: state.alerts.filter((alert: IAlertObject) => alert.id !== action.payload)
     }))
 })
-
-function removeAlertfromArray(alerts: IAlertObject[], id: string) {
-  return alerts.filter(alert => alert.id !== id)
-}

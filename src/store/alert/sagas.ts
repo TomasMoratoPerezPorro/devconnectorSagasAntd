@@ -1,18 +1,16 @@
-import { all, put, takeLatest, delay } from 'redux-saga/effects'
+import { all, put, delay, takeLeading } from 'redux-saga/effects'
 import rootActions from '../rootActions'
 
-function* onSetAlert(action: ReturnType<typeof rootActions.alertActions.setAlert>) {
+function* showAlerts(action: ReturnType<typeof rootActions.alertActions.setAlert>) {
   yield put(rootActions.alertActions.setAlert(action.payload))
-  console.error('ACTION SET ALERT')
+  console.log('AFTER ACTION SET ALERT')
   yield delay(2000)
-  console.error('ACTION DELAY')
+  console.log('AFTER DELAY')
   yield put(rootActions.alertActions.deleteAlert(action.payload.id))
-  console.error('ACTION DELETE ALERT')
-
-  /* setTimeout(() => yield put(rootActions.alertActions.deleteAlert(action.payload.id)), 500) */
+  console.log('AFTER ACTION DELETE')
 }
 
-export default function* actionSagas() {
-  console.log('ACTION SET ALERT')
-  yield all([takeLatest(rootActions.alertActions.setAlert, onSetAlert)])
+export default function* watchAlerts() {
+  console.log('LISTENING ACTION SET ALERT')
+  yield all([takeLeading(rootActions.alertActions.setAlert, showAlerts)])
 }
