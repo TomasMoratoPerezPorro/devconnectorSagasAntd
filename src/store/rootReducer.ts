@@ -5,10 +5,12 @@ import authReducer from './auth/reducer'
 import userReducer from './users/reducer' */
 
 import alertReducer from './alert/reducer'
+import authReducer from './auth/reducer'
 
 export default function createRootReducer(): Reducer {
   return combineReducers({
-    alert: alertReducer
+    alert: alertReducer,
+    auth: authReducer
     /* global: globalReducer,
     auth: authReducer,
     users: userReducer */

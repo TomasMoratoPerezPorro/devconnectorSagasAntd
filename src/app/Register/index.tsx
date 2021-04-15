@@ -5,6 +5,7 @@ import rootActions from '../../store/rootActions'
 import { IAlertObject } from '../../store/alert/actions'
 import { useDispatch } from 'react-redux'
 import { Form, Input, Button } from 'antd'
+import { IUserRegisterInfo } from '../../models/common'
 
 const formItemLayout = {
   labelCol: {
@@ -44,6 +45,12 @@ const Register = () => {
 
   const onFinish = (values: any) => {
     console.log('Success:', values)
+    let registerData: IUserRegisterInfo = {
+      name: values.name,
+      email: values.email,
+      password: values.password
+    }
+    d(rootActions.authActions.registerUser.request(registerData))
   }
 
   const onFinishFailed = (errorInfo: any) => {
@@ -70,6 +77,18 @@ const Register = () => {
       </p>
 
       <Form {...formItemLayout} name="register" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form.Item
+          name="name"
+          label="Name"
+          rules={[
+            {
+              required: true,
+              message: 'Please input your developer name'
+            }
+          ]}
+        >
+          <Input />
+        </Form.Item>
         <Form.Item
           name="email"
           label="E-mail"

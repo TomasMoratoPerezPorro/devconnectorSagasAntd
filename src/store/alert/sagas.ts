@@ -1,7 +1,5 @@
-import { all, put, delay, takeEvery } from 'redux-saga/effects'
+import { all, delay, put, takeEvery } from 'redux-saga/effects'
 import rootActions from '../rootActions'
-
-// TOM
 
 function* showAlerts(action: ReturnType<typeof rootActions.alertActions.setAlert>) {
   yield delay(action.payload.timeOut)
