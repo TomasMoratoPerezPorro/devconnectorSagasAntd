@@ -17,7 +17,6 @@ export default createReducer(initState, builder => {
       alerts: [...state.alerts, action.payload]
     }))
     .addCase(rootActions.alertActions.deleteAlert, (state, action) => ({
-      ...state,
       alerts: state.alerts.filter((alert: IAlertObject) => alert.id !== action.payload)
     }))
 })

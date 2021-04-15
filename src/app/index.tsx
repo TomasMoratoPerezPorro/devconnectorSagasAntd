@@ -9,9 +9,13 @@ import CustomHeader from '../components/CustomHeader'
 import Landing from './Landing'
 import Register from './Register'
 import Login from './Login'
-import Alert from '../components/Alert'
+import Alert from '../components/AlertList'
+import { useSelector } from 'react-redux'
+import { IAlertObject } from '../store/alert/actions'
+import rootSelectors from '../store/rootSelectors'
 
 function App() {
+  const alerts: IAlertObject[] = useSelector(rootSelectors.alerts.alerts)
   return (
     <div className="App">
       <Router>
@@ -20,7 +24,7 @@ function App() {
             <CustomHeader></CustomHeader>
           </Header>
           <Content>
-            <Alert />
+            <Alert alertsArray={alerts} />
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />

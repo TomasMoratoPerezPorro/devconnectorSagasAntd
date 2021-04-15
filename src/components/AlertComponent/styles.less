@@ -8,6 +8,7 @@
   opacity: 0.9;
   background: #f4f4f4;
   color: #333;
+  animation: slide-up 0.4s ease;
   p {
     margin-bottom: 0rem;
   }
@@ -20,4 +21,15 @@
 .alert-danger {
   background: #dc3545;
   color: #fff;
+}
+
+@keyframes slide-up {
+  0% {
+    opacity: 0;
+    transform: translateX(-20px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateX(0);
+  }
 }

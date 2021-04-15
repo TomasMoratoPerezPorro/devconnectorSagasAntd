@@ -55,7 +55,7 @@ const Register = () => {
       let alert: IAlertObject = {
         msg: error.errors[0],
         alertType: 'danger',
-        timeOut: 3000,
+        timeOut: 5000,
         id: id
       }
       d(rootActions.alertActions.setAlert(alert))
