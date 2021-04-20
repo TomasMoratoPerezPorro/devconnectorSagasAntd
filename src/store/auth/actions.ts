@@ -5,3 +5,5 @@ import { IUserInfo, IUserRegisterInfo } from '../../models/common'
 export const registerUser = createAsyncAction<IUserRegisterInfo, IUserInfo | null, any>(
   'AUTH Register User'
 )
+
+export const loadUser = createAsyncAction<any, IUserInfo | null, any>('AUTH Load User')

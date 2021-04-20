@@ -18,6 +18,19 @@ const initialState: IAuthSate = {
 
 export default createReducer(initialState, builder => {
   builder
+    .addCase(rootActions.authActions.loadUser.success, (state, action) => ({
+      ...state,
+      isAuthenticated: true,
+      loading: false,
+      user: action.payload
+    }))
+    .addCase(rootActions.authActions.loadUser.failure, state => ({
+      ...state,
+      loading: false,
+      token: null,
+      isAuthenticated: false,
+      user: null
+    }))
     .addCase(rootActions.authActions.registerUser.request, state => ({
       ...state,
       loading: true
@@ -27,6 +40,16 @@ export default createReducer(initialState, builder => {
       isAuthenticated: true,
       user: action.payload
     }))
+    .addMatcher(
+      isAnyOf(
+        rootActions.authActions.registerUser.request,
+        rootActions.authActions.loadUser.request
+      ),
+      state => ({
+        ...state,
+        loading: true
+      })
+    )
     .addMatcher(
       isAnyOf(
         rootActions.authActions.registerUser.success,
