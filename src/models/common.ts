@@ -19,3 +19,8 @@ export interface IUserRegisterInfo {
   email: string
   password: string
 }
+
+export interface IUserLoginInfo {
+  email: string
+  password: string
+}

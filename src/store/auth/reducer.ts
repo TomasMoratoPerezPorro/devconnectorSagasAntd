@@ -30,34 +30,38 @@ export default createReducer(initialState, builder => {
       token: null,
       isAuthenticated: false,
       user: null
-    }))
-    .addCase(rootActions.authActions.registerUser.request, state => ({
-      ...state,
-      loading: true
-    }))
-    .addCase(rootActions.authActions.registerUser.success, (state, action) => ({
-      ...state,
-      isAuthenticated: true,
-      user: action.payload
-    }))
+    })) ///
     .addMatcher(
       isAnyOf(
-        rootActions.authActions.registerUser.request,
-        rootActions.authActions.loadUser.request
+        rootActions.authActions.registerUser.success,
+        rootActions.authActions.loginUser.success
       ),
+      (state, action) => ({
+        ...state,
+        loading: false,
+        isAuthenticated: true,
+        user: action.payload
+      })
+    )
+    .addMatcher(
+      isAnyOf(rootActions.authActions.loadUser.failure, rootActions.authActions.loginUser.failure),
       state => ({
         ...state,
-        loading: true
+        loading: false,
+        token: null,
+        isAuthenticated: false,
+        user: null
       })
     )
     .addMatcher(
       isAnyOf(
-        rootActions.authActions.registerUser.success,
-        rootActions.authActions.registerUser.failure
+        rootActions.authActions.registerUser.request,
+        rootActions.authActions.loadUser.request,
+        rootActions.authActions.loginUser.request
       ),
       state => ({
         ...state,
-        loading: false
+        loading: true
       })
     )
 })

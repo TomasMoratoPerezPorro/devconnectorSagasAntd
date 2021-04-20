@@ -1,9 +1,8 @@
 import { all, call, put, takeLatest } from '@redux-saga/core/effects'
-import services from '../../services'
-import rootActions from '../rootActions'
 import { v4 as uuidv4 } from 'uuid'
+import services from '../../services'
 import { IAlertObject } from '../alert/actions'
-import setAuthToken from '../../helpers/setAuthToken'
+import rootActions from '../rootActions'
 
 function* requestRegister(action: ReturnType<typeof rootActions.authActions.registerUser.request>) {
   try {
@@ -30,7 +29,7 @@ function* failedRegister(action: ReturnType<typeof rootActions.authActions.regis
 
 function* loadUserInfo() {
   if (localStorage.token) {
-    setAuthToken(localStorage.token)
+    services.userAPI.setToken(localStorage.token)
   }
   try {
     const { data } = yield call(services.userAPI.loadUser)
@@ -41,10 +40,36 @@ function* loadUserInfo() {
   }
 }
 
+function* loginUser(action: ReturnType<typeof rootActions.authActions.loginUser.request>) {
+  try {
+    const { data } = yield call(services.userAPI.loginUser, action.payload)
+    yield put(rootActions.authActions.loginUser.success(data))
+    localStorage.setItem('token', data.token)
+    yield call(loadUserInfo)
+  } catch (err) {
+    console.error('LOGIN FAILED')
+    yield put(rootActions.authActions.loginUser.failure(err.response.data.errors))
+  }
+}
+
+function* failedLogin(action: ReturnType<typeof rootActions.authActions.loginUser.failure>) {
+  const errors = action.payload
+  let id = uuidv4()
+  let alert: IAlertObject = {
+    msg: errors[0].msg,
+    alertType: 'danger',
+    timeOut: 5000,
+    id: id
+  }
+  yield put(rootActions.alertActions.setAlert(alert))
+}
+
 export default function* allSagas() {
   yield all([
     takeLatest(rootActions.authActions.registerUser.request, requestRegister),
     takeLatest(rootActions.authActions.registerUser.failure, failedRegister),
-    takeLatest(rootActions.authActions.loadUser.request, loadUserInfo)
+    takeLatest(rootActions.authActions.loadUser.request, loadUserInfo),
+    takeLatest(rootActions.authActions.loginUser.request, loginUser),
+    takeLatest(rootActions.authActions.loginUser.failure, failedLogin)
   ])
 }
