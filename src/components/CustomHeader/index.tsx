@@ -13,6 +13,7 @@ export default function CustomHeader() {
 
   const logout = () => {
     d(rootActions.authActions.logout())
+    d(rootActions.profileActions.clearProfile())
   }
 
   const authLinks = (

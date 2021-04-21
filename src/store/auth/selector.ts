@@ -7,10 +7,12 @@ const reducer = getReducer<IAuthState>(REDUCERNAMES.AUTH)
 
 const isAuthenticated = createSelector(reducer, state => state.isAuthenticated)
 const loading = createSelector(reducer, state => state.loading)
+const user = createSelector(reducer, state => state.user)
 
 const authSelectors = {
   isAuthenticated,
-  loading
+  loading,
+  user
 }
 
 export default authSelectors

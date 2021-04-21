@@ -25,6 +25,13 @@ export default createReducer(initState, builder => {
       profile: action.payload,
       loading: false
     }))
+    .addCase(rootActions.profileActions.clearProfile, state => ({
+      ...state,
+      profile: null,
+      repos: [],
+      loading: false,
+      error: {}
+    }))
     .addMatcher(isAnyOf(rootActions.profileActions.getCurrentProfile.failure), (state, action) => ({
       ...state,
       loading: false,

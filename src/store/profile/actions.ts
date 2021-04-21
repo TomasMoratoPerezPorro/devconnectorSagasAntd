@@ -1,5 +1,8 @@
+import { createAction } from '@reduxjs/toolkit'
 import { createAsyncAction } from '../../helpers/common'
 import { IProfileObject } from '../../models/profile'
+
+export const clearProfile = createAction('PROFILE clearProfile')
 
 export const getCurrentProfile = createAsyncAction<undefined, any, any>('PROFILE Get Profile')
 export const createProfile = createAsyncAction<IProfileObject, any, any>('PROFILE Create Profile')
