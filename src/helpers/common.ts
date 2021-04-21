@@ -8,3 +8,7 @@ export const createAsyncAction = <A, B, C>(actionType: string): IAsyncAction<A, 
     failure: createAction<C>(`${actionType} Failure`)
   }
 }
+
+export const getReducer = <T>(reducerKey: string): ((state: any) => T) => {
+  return state => state[reducerKey]
+}

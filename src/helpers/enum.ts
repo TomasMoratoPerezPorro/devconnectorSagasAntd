@@ -1,3 +1,4 @@
 export enum REDUCERNAMES {
-  ALERTS = 'alerts'
+  ALERTS = 'alerts',
+  AUTH = 'auth'
 }

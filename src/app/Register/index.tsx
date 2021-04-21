@@ -3,9 +3,11 @@ import { v4 as uuidv4 } from 'uuid'
 import './styles.less'
 import rootActions from '../../store/rootActions'
 import { IAlertObject } from '../../store/alert/actions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Form, Input, Button } from 'antd'
 import { IUserRegisterInfo } from '../../models/common'
+import { Redirect } from 'react-router-dom'
+import rootSelectors from '../../store/rootSelectors'
 
 const formItemLayout = {
   labelCol: {
@@ -42,6 +44,12 @@ const tailFormItemLayout = {
 
 const Register = () => {
   const d = useDispatch()
+
+  const isAuthenticated = useSelector(rootSelectors.auth.isAuthenticated)
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />
+  }
 
   const onFinish = (values: any) => {
     console.log('Success:', values)

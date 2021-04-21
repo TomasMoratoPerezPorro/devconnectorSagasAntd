@@ -11,6 +11,7 @@ import rootSelectors from '../store/rootSelectors'
 import Landing from './Landing'
 import Login from './Login'
 import Register from './Register'
+import Dashboard from './Dashboard'
 import './styles.less'
 
 const { Header, Content } = Layout
@@ -37,6 +38,7 @@ function App() {
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
+            <Route exact path="/dashboard" component={Dashboard} />
           </Content>
         </Layout>
       </Router>

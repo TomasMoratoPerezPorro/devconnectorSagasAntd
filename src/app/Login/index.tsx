@@ -1,11 +1,13 @@
 import React from 'react'
+import { Link, Redirect } from 'react-router-dom'
 import './styles.less'
 import { Form, Input, Button } from 'antd'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import rootActions from '../../store/rootActions'
 import { v4 as uuidv4 } from 'uuid'
 import { IAlertObject } from '../../store/alert/actions'
 import { IUserLoginInfo } from '../../models/common'
+import rootSelectors from '../../store/rootSelectors'
 
 const formItemLayout = {
   labelCol: {
@@ -42,6 +44,11 @@ const tailFormItemLayout = {
 
 const Login = () => {
   const d = useDispatch()
+  const isAuthenticated = useSelector(rootSelectors.auth.isAuthenticated)
+
+  if (isAuthenticated) {
+    return <Redirect to="/dashboard" />
+  }
 
   const onFinish = (values: any) => {
     console.log('Success:', values)

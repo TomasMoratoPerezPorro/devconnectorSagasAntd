@@ -2,14 +2,14 @@ import { createReducer, isAnyOf } from '@reduxjs/toolkit'
 import { IUserInfo } from '../../models/common'
 import rootActions from '../rootActions'
 
-export interface IAuthSate {
+export interface IAuthState {
   token: string | null
   isAuthenticated: boolean | null
   loading: boolean
   user: IUserInfo | null
 }
 
-const initialState: IAuthSate = {
+const initialState: IAuthState = {
   token: localStorage.getItem('token'),
   isAuthenticated: null,
   loading: false,
@@ -30,7 +30,7 @@ export default createReducer(initialState, builder => {
       token: null,
       isAuthenticated: false,
       user: null
-    })) ///
+    }))
     .addMatcher(
       isAnyOf(
         rootActions.authActions.registerUser.success,
@@ -39,12 +39,16 @@ export default createReducer(initialState, builder => {
       (state, action) => ({
         ...state,
         loading: false,
-        isAuthenticated: true,
-        user: action.payload
+        token: action.payload.token,
+        isAuthenticated: true
       })
     )
     .addMatcher(
-      isAnyOf(rootActions.authActions.loadUser.failure, rootActions.authActions.loginUser.failure),
+      isAnyOf(
+        rootActions.authActions.loadUser.failure,
+        rootActions.authActions.loginUser.failure,
+        rootActions.authActions.logout
+      ),
       state => ({
         ...state,
         loading: false,

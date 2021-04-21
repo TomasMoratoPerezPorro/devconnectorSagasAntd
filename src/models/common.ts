@@ -24,3 +24,7 @@ export interface IUserLoginInfo {
   email: string
   password: string
 }
+
+export interface IUserToken {
+  token: string
+}
