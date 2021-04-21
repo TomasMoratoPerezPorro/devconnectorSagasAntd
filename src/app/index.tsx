@@ -1,5 +1,5 @@
 import { Layout } from 'antd'
-import { useEffect } from 'react'
+import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Alert from '../components/AlertList'
@@ -12,6 +12,7 @@ import Landing from './Landing'
 import Login from './Login'
 import Register from './Register'
 import Dashboard from './Dashboard'
+import PrivateRoute from '../components/PrivateRoute'
 import './styles.less'
 
 const { Header, Content } = Layout
@@ -38,7 +39,7 @@ function App() {
             <Route exact path="/" component={Landing} />
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
-            <Route exact path="/dashboard" component={Dashboard} />
+            <PrivateRoute path="/dashboard" component={Dashboard} />
           </Content>
         </Layout>
       </Router>
