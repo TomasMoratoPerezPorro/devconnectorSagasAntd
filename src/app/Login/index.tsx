@@ -1,13 +1,13 @@
+import { Button, Form, Input } from 'antd'
 import React from 'react'
-import { Link, Redirect } from 'react-router-dom'
-import './styles.less'
-import { Form, Input, Button } from 'antd'
 import { useDispatch, useSelector } from 'react-redux'
-import rootActions from '../../store/rootActions'
+import { Redirect } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
-import { IAlertObject } from '../../store/alert/actions'
 import { IUserLoginInfo } from '../../models/common'
+import { IAlertObject } from '../../store/alert/actions'
+import rootActions from '../../store/rootActions'
 import rootSelectors from '../../store/rootSelectors'
+import './styles.less'
 
 const formItemLayout = {
   labelCol: {
