@@ -1,14 +1,46 @@
 import React, { Fragment } from 'react'
-import { Form, Input, Button, Radio } from 'antd'
+import { Form, Input, Button, Radio, Select } from 'antd'
+const { Option } = Select
 import './styles.less'
-const EditProfile = () => {
-  const [form] = Form.useForm()
+import TextArea from 'antd/lib/input/TextArea'
 
-  const buttonItemLayout = {
-    wrapperCol: {
-      span: 14,
-      offset: 4
-    }
+const layout = {
+  labelCol: {
+    span: 24
+  },
+  wrapperCol: {
+    span: 20
+  }
+}
+const tailLayout = {
+  wrapperCol: {
+    offset: 0.5, // Distancia entre  Label i input
+    span: 20 // Amplada Inputs
+  }
+}
+
+const selectBefore = (
+  <Select defaultValue="http://" className="select-before">
+    <Option value="http://">http://</Option>
+    <Option value="https://">https://</Option>
+  </Select>
+)
+const selectAfter = (
+  <Select defaultValue=".com" className="select-after">
+    <Option value=".com">.com</Option>
+    <Option value=".jp">.jp</Option>
+    <Option value=".cn">.cn</Option>
+    <Option value=".org">.org</Option>
+  </Select>
+)
+
+const EditProfile = () => {
+  const onFinish = (values: any) => {
+    console.log('Success:', values)
+  }
+
+  const onFinishFailed = (errorInfo: any) => {
+    console.log('ERRORS ARRAY:  ' + JSON.stringify(errorInfo))
   }
 
   return (
@@ -19,25 +51,98 @@ const EditProfile = () => {
           <i className="fas fa-user"></i> Let s get some information to make your profile stand out
         </p>
       </div>
+      <div className="formContainer">
+        <Form {...layout} layout="horizontal" onFinish={onFinish} onFinishFailed={onFinishFailed}>
+          <Form.Item
+            {...tailLayout}
+            label="Professional Status"
+            name="status"
+            extra="Give us an idea of where you are at in your career"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your developer name'
+              }
+            ]}
+          >
+            <Select
+              placeholder="Select a profesional status"
+              /* onChange={onGenderChange} */
+              allowClear
+            >
+              <Select.Option value="Developer">Developer</Select.Option>
+              <Select.Option value="Junior Developer">Junior Developer</Select.Option>
+              <Select.Option value="Senior Developer">Senior Developer</Select.Option>
+              <Select.Option value="Manager">Manager</Select.Option>
+              <Select.Option value="Student or Learning">Student or Learning</Select.Option>
+              <Select.Option value="Instructor">Instructor or Teacher</Select.Option>
+              <Select.Option value="Intern">Intern</Select.Option>
+              <Select.Option value="Other">Other</Select.Option>
+            </Select>
+          </Form.Item>
 
-      <Form layout="horizontal" form={form} initialValues={{}}>
-        <Form.Item label="Form Layout" name="layout">
-          <Radio.Group value="horizontal">
-            <Radio.Button value="horizontal">Horizontal</Radio.Button>
-            <Radio.Button value="vertical">Vertical</Radio.Button>
-            <Radio.Button value="inline">Inline</Radio.Button>
-          </Radio.Group>
-        </Form.Item>
-        <Form.Item label="Field A">
-          <Input placeholder="input placeholder" />
-        </Form.Item>
-        <Form.Item label="Field B">
-          <Input placeholder="input placeholder" />
-        </Form.Item>
-        <Form.Item {...buttonItemLayout}>
-          <Button type="primary">Submit</Button>
-        </Form.Item>
-      </Form>
+          <Form.Item
+            {...tailLayout}
+            name="company"
+            label="Company"
+            extra="Could be your own company or one you work for"
+          >
+            <Input placeholder="Company" />
+          </Form.Item>
+
+          <Form.Item
+            {...tailLayout}
+            name="website"
+            label="Website"
+            extra="Could be your own or a company website"
+          >
+            <Input addonBefore={selectBefore} addonAfter={selectAfter} placeholder="mysite" />
+          </Form.Item>
+
+          <Form.Item
+            {...tailLayout}
+            name="location"
+            label="Location"
+            extra="City and state suggested (eg. Boston, MA)"
+          >
+            <Input placeholder="Location" />
+          </Form.Item>
+
+          <Form.Item
+            {...tailLayout}
+            name="skills"
+            label="Skills"
+            extra="Please use comma separated values (eg. HTML,CSS,JavaScript,PHP)"
+            rules={[
+              {
+                required: true,
+                message: 'Please input your developer name'
+              }
+            ]}
+          >
+            <Input placeholder="Skills" />
+          </Form.Item>
+
+          <Form.Item
+            {...tailLayout}
+            name="githubusername"
+            label="GitHub Username"
+            extra="If you want your latest repos and a Github link, include your username"
+          >
+            <Input placeholder="GitHub Username" />
+          </Form.Item>
+
+          <Form.Item {...tailLayout} name="bio" label="Bio" extra="Tell us a little about yourself">
+            <TextArea placeholder="A short bio of yourself" autoSize={{ minRows: 2, maxRows: 6 }} />
+          </Form.Item>
+
+          <Form.Item {...tailLayout}>
+            <Button type="primary" htmlType="submit">
+              Submit
+            </Button>
+          </Form.Item>
+        </Form>
+      </div>
     </div>
   )
 }

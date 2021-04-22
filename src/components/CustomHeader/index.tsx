@@ -5,6 +5,7 @@ import { Fragment } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import rootSelectors from '../../store/rootSelectors'
 import rootActions from '../../store/rootActions'
+import services from '../../services'
 
 export default function CustomHeader() {
   const isAuthenticated = useSelector(rootSelectors.auth.isAuthenticated)
@@ -12,6 +13,9 @@ export default function CustomHeader() {
   const d = useDispatch()
 
   const logout = () => {
+    if (localStorage.token) {
+      services.userAPI.deleteToken()
+    }
     d(rootActions.authActions.logout())
     d(rootActions.profileActions.clearProfile())
   }
