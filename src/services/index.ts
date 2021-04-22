@@ -11,6 +11,7 @@ const userAPI = {
   loginUser: async (body: IUserLoginInfo) => instance.post('/auth', body),
   loadUser: async () => instance.get('/auth'),
   getCurrentUserProfile: async () => instance.get('/profile/me'),
+  createUserProfile: async (body: any) => instance.post('/profile', body),
   //TOKEN
   setToken: (token: string) => (instance.defaults.headers.common['x-auth-token'] = token),
   deleteToken: () => delete instance.defaults.headers.common['x-auth-token']

@@ -13,6 +13,21 @@ function* getUserProfile() {
   }
 }
 
+function* createProfile(
+  action: ReturnType<typeof rootActions.profileActions.createProfile.request>
+) {
+  try {
+    const { data } = yield call(services.userAPI.createUserProfile, action.payload)
+    yield put(rootActions.profileActions.createProfile.success(data))
+  } catch (err) {
+    console.error('CREATE PROFILE ERROR: ' + err.response.statusText)
+    yield put(rootActions.profileActions.createProfile.failure)
+  }
+}
+
 export default function* watchProfile() {
-  yield all([takeLatest(rootActions.profileActions.getCurrentProfile.request, getUserProfile)])
+  yield all([
+    takeLatest(rootActions.profileActions.getCurrentProfile.request, getUserProfile),
+    takeLatest(rootActions.profileActions.createProfile.request, createProfile)
+  ])
 }

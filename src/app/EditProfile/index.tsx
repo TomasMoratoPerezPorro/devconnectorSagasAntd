@@ -1,8 +1,13 @@
-import React, { Fragment } from 'react'
-import { Form, Input, Button, Radio, Select } from 'antd'
-const { Option } = Select
-import './styles.less'
+import { Button, Form, Input, Select } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
+import { v4 as uuidv4 } from 'uuid'
+import { IAlertObject } from '../../store/alert/actions'
+import rootActions from '../../store/rootActions'
+import './styles.less'
+const { Option } = Select
 
 const layout = {
   labelCol: {
@@ -34,13 +39,29 @@ const selectAfter = (
   </Select>
 )
 
-const EditProfile = () => {
+const EditProfile = ({ history }: RouteComponentProps) => {
+  const d = useDispatch()
+  const [displaySocialInputs, toggleSocialInputs] = useState(false)
+
   const onFinish = (values: any) => {
-    console.log('Success:', values)
+    console.log('Success:', JSON.stringify(values))
+    d(rootActions.profileActions.createProfile.request(values))
+    history.push('/dashboard')
   }
 
   const onFinishFailed = (errorInfo: any) => {
     console.log('ERRORS ARRAY:  ' + JSON.stringify(errorInfo))
+    errorInfo.errorFields.forEach((error: any) => {
+      let id = uuidv4()
+      console.log(id)
+      let alert: IAlertObject = {
+        msg: error.errors[0],
+        alertType: 'danger',
+        timeOut: 5000,
+        id: id
+      }
+      d(rootActions.alertActions.setAlert(alert))
+    })
   }
 
   return (
@@ -51,6 +72,7 @@ const EditProfile = () => {
           <i className="fas fa-user"></i> Let s get some information to make your profile stand out
         </p>
       </div>
+
       <div className="formContainer">
         <Form {...layout} layout="horizontal" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
@@ -61,7 +83,7 @@ const EditProfile = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input your developer name'
+                message: 'Please input your professional status'
               }
             ]}
           >
@@ -116,7 +138,7 @@ const EditProfile = () => {
             rules={[
               {
                 required: true,
-                message: 'Please input your developer name'
+                message: 'Please input your developer skills'
               }
             ]}
           >
@@ -136,6 +158,50 @@ const EditProfile = () => {
             <TextArea placeholder="A short bio of yourself" autoSize={{ minRows: 2, maxRows: 6 }} />
           </Form.Item>
 
+          <Button
+            className="socialButton"
+            shape="round"
+            type="dashed"
+            onClick={() => toggleSocialInputs(!displaySocialInputs)}
+          >
+            Add Social Network Links
+          </Button>
+
+          {displaySocialInputs && (
+            <div className="socialInputs">
+              <Form.Item {...tailLayout} name="twitter">
+                <Input
+                  placeholder="Twitter URL"
+                  prefix={<i className="fab fa-twitter fa-1x"></i>}
+                />
+              </Form.Item>
+              <Form.Item {...tailLayout} name="facebook">
+                <Input
+                  placeholder="Facebook URL"
+                  prefix={<i className="fab fa-facebook fa-1x"></i>}
+                />
+              </Form.Item>
+              <Form.Item {...tailLayout} name="youtube">
+                <Input
+                  placeholder="Youtube URL"
+                  prefix={<i className="fab fa-youtube fa-1x"></i>}
+                />
+              </Form.Item>
+              <Form.Item {...tailLayout} name="linkedin">
+                <Input
+                  placeholder="Linkedin URL"
+                  prefix={<i className="fab fa-linkedin fa-1x"></i>}
+                />
+              </Form.Item>
+              <Form.Item {...tailLayout} name="instagram">
+                <Input
+                  placeholder="Instagram URL"
+                  prefix={<i className="fab fa-instagram fa-1x"></i>}
+                />
+              </Form.Item>
+            </div>
+          )}
+
           <Form.Item {...tailLayout}>
             <Button type="primary" htmlType="submit">
               Submit
@@ -147,4 +213,4 @@ const EditProfile = () => {
   )
 }
 
-export default EditProfile
+export default withRouter(EditProfile)

@@ -7,6 +7,7 @@ import { LoadingOutlined } from '@ant-design/icons'
 import './styles.less'
 import rootSelectors from '../../store/rootSelectors'
 import { Link } from 'react-router-dom'
+import DashboardButtons from './DashboardButtons'
 
 const antIcon = <LoadingOutlined style={{ fontSize: 24 }} spin />
 
@@ -19,7 +20,11 @@ const Dashboard = () => {
     d(rootActions.profileActions.getCurrentProfile.request())
   }, [])
 
-  const hasProfile = <Fragment>HAS</Fragment>
+  const hasProfile = (
+    <Fragment>
+      <DashboardButtons />
+    </Fragment>
+  )
 
   const noProfile = (
     <Fragment>
