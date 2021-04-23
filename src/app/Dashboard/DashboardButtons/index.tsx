@@ -1,16 +1,20 @@
 import React from 'react'
 import { Button } from 'antd'
+import './styles.less'
+import { Link } from 'react-router-dom'
 
 const DashboardButtons = () => {
   return (
     <div>
-      <Button type="primary">
-        <i className="fas fa-user-circle "></i> Edit Profile
-      </Button>
-      <Button type="primary">
+      <Link to="/edit-profile">
+        <Button type="primary" className="dashboardButton">
+          <i className="fas fa-user-circle "></i> Edit Profile
+        </Button>
+      </Link>
+      <Button type="primary" className="dashboardButton">
         <i className="fab fa-black-tie "></i> Add Experience
       </Button>
-      <Button type="primary">
+      <Button type="primary" className="dashboardButton">
         <i className="fas fa-graduation-cap "></i> Add Education
       </Button>
     </div>

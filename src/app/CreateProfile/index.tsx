@@ -1,12 +1,11 @@
 import { Button, Form, Input, Select } from 'antd'
 import TextArea from 'antd/lib/input/TextArea'
-import React, { useEffect, useState } from 'react'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, RouteComponentProps, withRouter } from 'react-router-dom'
+import React, { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import { RouteComponentProps, withRouter } from 'react-router-dom'
 import { v4 as uuidv4 } from 'uuid'
 import { IAlertObject } from '../../store/alert/actions'
 import rootActions from '../../store/rootActions'
-import rootSelectors from '../../store/rootSelectors'
 import './styles.less'
 const { Option } = Select
 
@@ -40,31 +39,9 @@ const selectAfter = (
   </Select>
 )
 
-const EditProfile = ({ history }: RouteComponentProps) => {
+const CreateProfile = ({ history }: RouteComponentProps) => {
   const d = useDispatch()
-  const isLoading = useSelector(rootSelectors.profile.loading)
-  const profile = useSelector(rootSelectors.profile.profile)
-  const [form] = Form.useForm()
   const [displaySocialInputs, toggleSocialInputs] = useState(false)
-
-  useEffect(() => {
-    if (profile) {
-      form.setFieldsValue({
-        status: isLoading || !profile.status ? '' : profile.status,
-        company: isLoading || !profile.company ? '' : profile.company,
-        website: isLoading || !profile.website ? '' : profile.website,
-        location: isLoading || !profile.location ? '' : profile.location,
-        skills: isLoading || !profile.skills ? '' : profile.skills.join(','),
-        githubusername: isLoading || !profile.githubusername ? '' : profile.githubusername,
-        twitter: isLoading || !profile.social ? '' : profile.social.twitter,
-        facebook: isLoading || !profile.social ? '' : profile.social.facebook,
-        linkedin: isLoading || !profile.social ? '' : profile.social.linkedin,
-        youtube: isLoading || !profile.social ? '' : profile.social.youtube,
-        instagram: isLoading || !profile.social ? '' : profile.social.instagram,
-        bio: isLoading || !profile.bio ? '' : profile.bio
-      })
-    }
-  }, [isLoading])
 
   const onFinish = (values: any) => {
     console.log('Success:', JSON.stringify(values))
@@ -97,7 +74,7 @@ const EditProfile = ({ history }: RouteComponentProps) => {
       </div>
 
       <div className="formContainer">
-        <Form {...layout} form={form} onFinish={onFinish} onFinishFailed={onFinishFailed}>
+        <Form {...layout} layout="horizontal" onFinish={onFinish} onFinishFailed={onFinishFailed}>
           <Form.Item
             {...tailLayout}
             label="Professional Status"
@@ -229,11 +206,6 @@ const EditProfile = ({ history }: RouteComponentProps) => {
             <Button type="primary" htmlType="submit">
               Submit
             </Button>
-            <Link to="/dashboard">
-              <Button type="primary" htmlType="submit">
-                Go back
-              </Button>
-            </Link>
           </Form.Item>
         </Form>
       </div>
@@ -241,4 +213,4 @@ const EditProfile = ({ history }: RouteComponentProps) => {
   )
 }
 
-export default withRouter(EditProfile)
+export default withRouter(CreateProfile)

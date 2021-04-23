@@ -14,6 +14,7 @@ import Register from './Register'
 import Dashboard from './Dashboard'
 import PrivateRoute from '../components/PrivateRoute'
 import './styles.less'
+import CreateProfile from './CreateProfile'
 import EditProfile from './EditProfile'
 
 const { Header, Content } = Layout
@@ -41,7 +42,8 @@ function App() {
             <Route exact path="/register" component={Register} />
             <Route exact path="/login" component={Login} />
             <PrivateRoute path="/dashboard" component={Dashboard} />
-            <PrivateRoute path="/create-profile" component={EditProfile} />
+            <PrivateRoute path="/create-profile" component={CreateProfile} />
+            <PrivateRoute path="/edit-profile" component={EditProfile} />
           </Content>
         </Layout>
       </Router>
