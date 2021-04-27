@@ -1,6 +1,7 @@
 import { createReducer, isAnyOf } from '@reduxjs/toolkit'
 import { IUserInfo } from '../../models/common'
 import rootActions from '../rootActions'
+import { registerUser } from './actions'
 
 export interface IAuthState {
   token: string | null
@@ -47,6 +48,7 @@ export default createReducer(initialState, builder => {
       isAnyOf(
         rootActions.authActions.loadUser.failure,
         rootActions.authActions.loginUser.failure,
+        rootActions.authActions.registerUser.failure,
         rootActions.authActions.logout
       ),
       state => ({

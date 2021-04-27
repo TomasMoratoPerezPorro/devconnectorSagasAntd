@@ -17,7 +17,9 @@ const Dashboard = () => {
   const user = useSelector(rootSelectors.auth.user)
   const d = useDispatch()
   useEffect(() => {
-    d(rootActions.profileActions.getCurrentProfile.request())
+    if (loading === false) {
+      d(rootActions.profileActions.getCurrentProfile.request())
+    }
   }, [])
 
   const hasProfile = (

@@ -1,4 +1,6 @@
 import { PayloadActionCreator } from '@reduxjs/toolkit'
+import { Rule } from 'antd/lib/form'
+import React from 'react'
 
 export interface IAsyncAction<A, B, C> {
   request: PayloadActionCreator<A>
@@ -27,4 +29,16 @@ export interface IUserLoginInfo {
 
 export interface IUserToken {
   token: string
+}
+
+export interface IFormItem {
+  name: string
+  label?: string
+  extra?: string
+  disabled?: boolean
+  type: 'number' | 'date' | 'text' | 'select' | 'textArea'
+  valueOptions?: string[]
+  rules?: Rule
+  placeholder?: string
+  prefix?: React.ReactNode
 }
