@@ -1,5 +1,7 @@
 import { all, call, delay, put, takeLatest } from 'redux-saga/effects'
+import { v4 as uuidv4 } from 'uuid'
 import services from '../../services'
+import { IAlertObject } from '../alert/actions'
 import rootActions from '../rootActions'
 
 function* getUserProfile() {
@@ -19,6 +21,14 @@ function* createProfile(
   try {
     const { data } = yield call(services.userAPI.createUserProfile, action.payload)
     yield put(rootActions.profileActions.createProfile.success(data))
+    let id = uuidv4()
+    let alert: IAlertObject = {
+      msg: 'Profile saved succesfully',
+      alertType: 'success',
+      timeOut: 5000,
+      id: id
+    }
+    yield put(rootActions.alertActions.setAlert(alert))
   } catch (err) {
     console.error('CREATE PROFILE ERROR: ' + err.response.statusText)
     yield put(rootActions.profileActions.createProfile.failure)
