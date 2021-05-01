@@ -20,18 +20,6 @@ const initState: IProfileState = {
 
 export default createReducer(initState, builder => {
   builder
-    .addCase(rootActions.profileActions.getCurrentProfile.success, (state, action) => ({
-      ...state,
-      profile: action.payload,
-      loading: false,
-      error: {}
-    }))
-    .addCase(rootActions.profileActions.createProfile.success, (state, action) => ({
-      ...state,
-      profile: action.payload,
-      loading: false,
-      error: {}
-    }))
     .addCase(rootActions.profileActions.clearProfile, state => ({
       ...state,
       profile: null,
@@ -41,8 +29,22 @@ export default createReducer(initState, builder => {
     }))
     .addMatcher(
       isAnyOf(
+        rootActions.profileActions.getCurrentProfile.success,
+        rootActions.profileActions.addExperience.success,
+        rootActions.profileActions.createProfile.success
+      ),
+      (state, action) => ({
+        ...state,
+        profile: action.payload,
+        loading: false,
+        error: {}
+      })
+    )
+    .addMatcher(
+      isAnyOf(
         rootActions.profileActions.getCurrentProfile.failure,
-        rootActions.profileActions.createProfile.failure
+        rootActions.profileActions.createProfile.failure,
+        rootActions.profileActions.addExperience.failure
       ),
       (state, action) => ({
         ...state,
@@ -53,7 +55,8 @@ export default createReducer(initState, builder => {
     .addMatcher(
       isAnyOf(
         rootActions.profileActions.getCurrentProfile.request,
-        rootActions.profileActions.createProfile.request
+        rootActions.profileActions.createProfile.request,
+        rootActions.profileActions.addExperience.request
       ),
       state => ({
         ...state,

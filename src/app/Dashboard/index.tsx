@@ -40,7 +40,9 @@ const Dashboard = () => {
   )
 
   return loading && profile === null ? (
-    <Spin indicator={antIcon} />
+    <div className="loadingContainer">
+      <Spin indicator={antIcon} />
+    </div>
   ) : (
     <div className="dashboardContainer">
       <h1>Dashboard</h1>

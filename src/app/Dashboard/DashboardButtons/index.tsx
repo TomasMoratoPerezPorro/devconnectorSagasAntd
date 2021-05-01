@@ -11,9 +11,11 @@ const DashboardButtons = () => {
           <i className="fas fa-user-circle "></i> Edit Profile
         </Button>
       </Link>
-      <Button type="primary" className="dashboardButton">
-        <i className="fab fa-black-tie "></i> Add Experience
-      </Button>
+      <Link to="/add-experience">
+        <Button type="primary" className="dashboardButton">
+          <i className="fab fa-black-tie "></i> Add Experience
+        </Button>
+      </Link>
       <Button type="primary" className="dashboardButton">
         <i className="fas fa-graduation-cap "></i> Add Education
       </Button>

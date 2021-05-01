@@ -35,12 +35,12 @@ export interface ISocialObject {
 }
 
 export interface IExperienceObject {
-  current: boolean
-  _id: string
+  current?: boolean
+  _id?: string
   title: string
   company: string
-  location: string
+  location?: string
   from: string
-  to: string
-  description: string
+  to?: string
+  description?: string
 }

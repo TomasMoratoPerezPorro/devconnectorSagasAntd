@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { IUserLoginInfo, IUserRegisterInfo } from '../models/common'
+import { IExperienceObject } from '../models/profile'
 
 const instance = axios.create({
   baseURL: 'http://localhost:5000/api',
@@ -12,6 +13,7 @@ const userAPI = {
   loadUser: async () => instance.get('/auth'),
   getCurrentUserProfile: async () => instance.get('/profile/me'),
   createUserProfile: async (body: any) => instance.post('/profile', body),
+  addNewExperience: async (body: any) => instance.put('/profile/experience', body),
   //TOKEN
   setToken: (token: string) => (instance.defaults.headers.common['x-auth-token'] = token),
   deleteToken: () => delete instance.defaults.headers.common['x-auth-token']

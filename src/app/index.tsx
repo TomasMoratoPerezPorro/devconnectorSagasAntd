@@ -16,6 +16,7 @@ import PrivateRoute from '../components/PrivateRoute'
 import './styles.less'
 import CreateProfile from './CreateProfile'
 import EditProfile from './EditProfile'
+import AddExperience from './AddExperience'
 
 const { Header, Content } = Layout
 
@@ -44,6 +45,7 @@ function App() {
             <PrivateRoute path="/dashboard" component={Dashboard} />
             <PrivateRoute path="/create-profile" component={CreateProfile} />
             <PrivateRoute path="/edit-profile" component={EditProfile} />
+            <PrivateRoute path="/add-experience" component={AddExperience} />
           </Content>
         </Layout>
       </Router>

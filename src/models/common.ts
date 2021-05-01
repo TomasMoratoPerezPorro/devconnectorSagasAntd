@@ -36,7 +36,7 @@ export interface IFormItem {
   label?: string
   extra?: string
   disabled?: boolean
-  type: 'number' | 'date' | 'text' | 'select' | 'textArea'
+  type: 'number' | 'date' | 'text' | 'select' | 'textArea' | 'checkbox'
   valueOptions?: string[]
   rules?: Rule
   placeholder?: string

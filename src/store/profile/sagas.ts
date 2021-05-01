@@ -35,9 +35,30 @@ function* createProfile(
   }
 }
 
+function* addNewExperience(
+  action: ReturnType<typeof rootActions.profileActions.addExperience.request>
+) {
+  try {
+    const { data } = yield call(services.userAPI.addNewExperience, action.payload)
+    yield put(rootActions.profileActions.addExperience.success(data))
+    let id = uuidv4()
+    let alert: IAlertObject = {
+      msg: 'Profile Experience saved succesfully',
+      alertType: 'success',
+      timeOut: 5000,
+      id: id
+    }
+    yield put(rootActions.alertActions.setAlert(alert))
+  } catch (err) {
+    console.error('PROFILE ERROR: ' + err.response.statusText)
+    yield put(rootActions.profileActions.addExperience.failure)
+  }
+}
+
 export default function* watchProfile() {
   yield all([
     takeLatest(rootActions.profileActions.getCurrentProfile.request, getUserProfile),
-    takeLatest(rootActions.profileActions.createProfile.request, createProfile)
+    takeLatest(rootActions.profileActions.createProfile.request, createProfile),
+    takeLatest(rootActions.profileActions.addExperience.request, addNewExperience)
   ])
 }
